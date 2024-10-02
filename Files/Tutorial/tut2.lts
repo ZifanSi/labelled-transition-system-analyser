@@ -1,0 +1,8 @@
+VENDING_MACHINE = ZERO,
+ZERO = (nickel -> FIVE | dime -> TEN | quarter -> TWENTYFIVE | return -> ZERO),
+FIVE = (nickel -> TEN | dime -> FIFTEEN | quarter -> THIRTY | return -> ZERO),
+TEN = (nickel -> FIFTEEN | dime -> TWENTY | quarter -> TWENTYFIVE | return -> ZERO),
+FIFTEEN = (nickel -> TWENTY | dime -> TWENTYFIVE | quarter -> THIRTY | return -> ZERO),
+TWENTY = (nickel -> TWENTYFIVE | dime -> THIRTY | quarter -> THIRTY | return -> ZERO),
+TWENTYFIVE = (nickel -> THIRTY | dime -> THIRTY | quarter -> THIRTY | return -> ZERO),
+THIRTY = (pepsi -> FIVE | coke -> ZERO | return -> ZERO).

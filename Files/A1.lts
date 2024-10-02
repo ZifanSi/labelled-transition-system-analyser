@@ -1,8 +1,0 @@
-P = S0,
-S0 = (weekday -> S1 | weekend -> S3),
-S1 = (sleep -> S2),
-S2 = (work-> S0),
-S3 = (sleep -> S4),
-S4 = (shop -> S0 | play -> S0).
-
-menu RUN = {weekday, weekend, work, sleep, shop, play}

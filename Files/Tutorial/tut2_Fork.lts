@@ -1,0 +1,11 @@
+PHILOSOPHER = (think -> PHILOSOPHER 
+               | left.get -> HAS_LEFT),
+HAS_LEFT = (right.get -> HAS_BOTH),
+HAS_BOTH = (eat -> DONE),
+DONE = (left.put -> HAS_RIGHT),
+HAS_RIGHT = (right.put -> PHILOSOPHER).
+
+FORK = (get -> HELD),
+HELD = (put -> FORK).
+
+||TABLE = (a:PHILOSOPHER || b:PHILOSOPHER || {a.left, b.right}::FORK || {a.right, b.left}::FORK).

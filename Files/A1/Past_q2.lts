@@ -1,0 +1,11 @@
+ROADDEICING = (predictedsafe -> PREDICTEDSAFE | 
+                predictedunsafe -> PREDICTEDUNSAFE),
+
+PREDICTEDSAFE = (predictediceinfo -> PREDICTEDUNSAFE),
+
+PREDICTEDUNSAFE = (icemelts -> PREDICTEDSAFE | 
+                   roadtreated -> PREDICTEDSAFE | 
+                   unsafeforuse -> CLOSED),
+
+CLOSED = (icemelts -> PREDICTEDSAFE | 
+          roadtreated -> PREDICTEDSAFE).

@@ -1,0 +1,5 @@
+MAKER = (make -> ready -> MAKER).
+USER = (ready -> use -> USER).
+
+||SYSTEM = (MAKER || USER).
+// RUN COMPOSE

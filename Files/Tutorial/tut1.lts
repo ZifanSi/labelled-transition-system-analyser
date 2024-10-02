@@ -1,0 +1,13 @@
+OFF = (flip_on -> ON),
+ON = (flip_off -> OFF).
+
+menu RUN = {flip_on, flip_off}
+
+
+
+RED = (a -> GREEN | b -> ADVANCE),
+ADVANCE = (b -> GREEN),
+GREEN = (c -> YELLOW),
+YELLOW = (d -> RED).
+
+// menu RUN = {a,b,c,d}
