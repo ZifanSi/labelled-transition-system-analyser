@@ -1,0 +1,17 @@
+range N = 0..3
+ELEMENT = (up -> down -> ELEMENT).
+
+||COUNT = (e[i:N] : ELEMENT)
+   /{ up/e[0].up, 
+      down/e[0].down,
+      down/e[1].down,
+      down/e[2].down,
+      down/e[3].down }
+   @{up, down}.
+
+menu RUN = {up, down}
+
+
+
+
+

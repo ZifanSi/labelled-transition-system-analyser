@@ -1,0 +1,18 @@
+range T = 1..2  // Define the states range for the two graphs
+
+// Define the behavior of Graph1 with transitions between state 1 and state 2
+GRAPH1 = (
+    state1 -> state2 -> GRAPH1
+).
+
+// Define the behavior of Graph2 with transitions between state 2 and state 1
+GRAPH2 = (
+    state2 -> state1 -> GRAPH2
+).
+
+// Define a system where GRAPH1 and GRAPH2 run in parallel and have synchronized actions
+||TWOGRAPH = (a:GRAPH1 || b:GRAPH2)
+/{
+    a.state1/b.state2,  // Synchronize the transition: Graph1 moves from state1 -> state2, Graph2 moves from state2 -> state1
+    a.state2/b.state1   // Synchronize the reverse transition
+}.

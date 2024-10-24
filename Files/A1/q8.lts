@@ -1,0 +1,12 @@
+BUFFER = (send_msg -> receive_msg -> BUFFER).
+
+PROC1 = (buffer.send_msg -> WAIT_FOR_ACK),
+WAIT_FOR_ACK = (receive_ack -> ACK_RECEIVED),
+ACK_RECEIVED = (send_ack -> PROC1).
+
+PROC2 = (buffer.receive_msg -> MSG_RECEIVED),
+MSG_RECEIVED = (send_ack -> ACK_SENT),
+ACK_SENT = (send_msg -> PROC2).
+
+||SYSTEM = (a:PROC1 || b:PROC2 || {a,b}::buffer:BUFFER).
+
