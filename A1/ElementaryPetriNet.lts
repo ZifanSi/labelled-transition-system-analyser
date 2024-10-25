@@ -1,0 +1,3 @@
+BOOKSTACK = (collect -> A),
+USER = (collect -> A),
+A = (return -> BOOKSTACK | return -> USER).

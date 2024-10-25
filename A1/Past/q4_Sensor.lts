@@ -1,0 +1,9 @@
+range Level = 0..11
+
+SENSOR = SENSOR[5],
+SENSOR[w:Level] = (level[i:Level] -> SENSOR[i]
+    | when (w < 2) low_danger -> SENSOR[w]
+    | when (w == 2 || w == 3) low -> SENSOR[w]
+    | when (w == 8 || w == 9) high -> SENSOR[w]
+    | when (w > 9) high_danger -> SENSOR[w]
+    | when (w >= 4 && w <= 7) normal -> SENSOR[w]).

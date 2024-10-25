@@ -1,21 +1,21 @@
-USER = REQUEST_BOOK,
-REQUEST_BOOK = (request -> WAIT_TO_COLLECT),
-WAIT_TO_COLLECT = (collect -> RETURN_BOOK),
-RETURN_BOOK = (return -> REQUEST_BOOK).
+READER = (going_to_lib -> ARRIVED),
+ARRIVED = (to_Request_Desk -> REQUEST_DESK 
+           | to_Return_Desk -> RETURN_DESK),
+REQUEST_DESK = (book_is_borrowed -> msg_no_book -> COLLECTION_D_NO 
+                | book_is_update_index -> book_sent -> COLLECTION_D_YES),
+COLLECTION_D_NO = (to_home_empty -> READER 
+                   | to_home_empty -> REQUEST_DESK 
+                   | to_home_empty -> RETURN_DESK),
+COLLECTION_D_YES = (take_book -> READER 
+                    | take_book -> REQUEST_DESK 
+                    | take_book -> RETURN_DESK),
+RETURN_DESK = (return_book -> READER 
+               | return_book -> REQUEST_DESK 
+               | return_book -> RETURN_DESK).
 
-STACK = AVAILABLE,
-AVAILABLE = (borrow -> BORROWED),
-BORROWED = (return -> AVAILABLE).
+BOOK_STACK = (book_is_update_index -> book_sent -> BOOK_STACK 
+              | return_book -> return_update_index -> book_to_Stack -> BOOK_STACK),
+BOOK_INDEX = (book_is_update_index -> BOOK_INDEX 
+              | return_update_index -> BOOK_INDEX).
 
-INDEX = BOOK_AVAILABLE,
-BOOK_AVAILABLE = (borrow -> BOOK_BORROWED),
-BOOK_BORROWED = (return -> BOOK_AVAILABLE).
-
-REQUEST_DESK = (request -> borrow -> REQUEST_DESK).
-
-COLLECTION_DESK = WAIT_TO_COLLECT,
-WAIT_TO_COLLECT = (collect -> confirm_collect -> COLLECTION_DESK).
-
-RETURN_DESK = (return -> return_done -> RETURN_DESK).
-
-||LIBRARY_SYSTEM = (USER || STACK || INDEX || REQUEST_DESK || COLLECTION_DESK || RETURN_DESK).
+||LIBRARY = (READER || BOOK_STACK || BOOK_INDEX).

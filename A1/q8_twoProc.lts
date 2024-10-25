@@ -1,0 +1,14 @@
+SENDER = (proc_1 -> READY_TO_SEND),
+READY_TO_SEND = (send_msg -> WAIT_FOR_ACK),
+WAIT_FOR_ACK = (receive_ack -> ACK_RECEIVED),
+ACK_RECEIVED = (proc_1 -> READY_TO_SEND).
+
+RECEIVER = READY_TO_RECEIVE,
+READY_TO_RECEIVE = (receive_msg -> MSG_RECEIVED),
+MSG_RECEIVED = (send_ack -> ACK_SENT),
+ACK_SENT = (proc_1 -> READY_TO_RECEIVE).
+
+BUFFER = (get -> put -> BUFFER).
+
+||SENDER_RECEIVER = (SENDER || RECEIVER || message:BUFFER || ack:BUFFER)
+/{send_msg/message.get, receive_msg/message.put, send_ack/ack.get, receive_ack/ack.put}.

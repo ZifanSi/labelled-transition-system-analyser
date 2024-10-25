@@ -1,4 +1,4 @@
 COMP1 = (idle1 -> (read1 -> COMP1 | write1 -> COMP1)).
 COMP2 = (idle2 -> (read2 -> COMP2 | write2 -> COMP2)).
-LOCK = (write1 -> LOCK | write2 -> LOCK).
-SYSTEM = COMP1 || COMP2 || LOCK.
+MUT = (write1 -> MUT | write2 -> MUT).
+||TWPCOMP = (COMP1 || COMP2 || MUT).
