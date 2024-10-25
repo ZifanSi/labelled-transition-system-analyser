@@ -1,0 +1,7 @@
+ROAD_DEICING = (predicted_safe -> PREDICTED_SAFE | 
+                predicted_unsafe -> PREDICTED_UNSAFE),
+PREDICTED_SAFE = (predicted_ice_info -> PREDICTED_UNSAFE),
+PREDICTED_UNSAFE = (ice_melts -> PREDICTED_SAFE | 
+                    road_treated -> PREDICTED_SAFE | 
+                    unsafe_for_use -> CLOSED),
+CLOSED = (ice_melts -> PREDICTED_SAFE | road_treated -> PREDICTED_SAFE).

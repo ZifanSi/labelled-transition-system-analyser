@@ -1,26 +1,19 @@
-Q1_1 = S0,
 S0 = (weekday -> S1 | weekend -> S3),
 S1 = (sleep -> S2),
 S2 = (work-> S0),
 S3 = (sleep -> S4),
 S4 = (shop -> S0 | play -> S0).
 
-menu RUN = {weekday, weekend, work, sleep, shop, play}
+// PERSON2 = (weelday -> sleep -> work -> PERSON |weekend -> sleep -> (shop -> PERSON | play -> PERSON))
 
 
-Q1_2 = A, 
 A = (a -> B | b -> C), 
 B = (a -> B | b -> D), 
 C = (a -> E | b -> C), 
 D = (a -> B | b -> D), 
 E = (a -> E | b -> C).
 
-// menu RUN = {a, b}.
 
-
-Q1_3 = A,
 A = (d -> B),
-B = (c -> A | b -> C | a -> A),
-C = (c -> A | a -> A ).
-
-// menu RUN = {a, b, c}.
+B = (a -> A | b -> C | c -> A),
+C = (a -> A | c -> A  ).
