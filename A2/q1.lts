@@ -1,0 +1,11 @@
+const M = 5
+const N = 3
+
+POT = POT[M],
+POT[0] = (fillpot -> POT[M]),
+POT[i:1..M] = (getserving -> POT[i-1]).
+
+SAVAGE = (getserving -> SAVAGE).
+COOK = (fillpot -> COOK).
+
+||DINING_SAVAGES_SYSTEM = (pot:POT || cook:COOK || savage[1..N]:SAVAGE).

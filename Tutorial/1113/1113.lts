@@ -1,0 +1,25 @@
+const TOTAL_CUSTOMERS = 3
+const TOTAL_PUMPS = 2
+range R_CUSTOMERS = 1..TOTAL_CUSTOMERS
+range R_PUMPS = 1..TOTAL_PUMPS
+range R_AMOUNT = 1..2
+
+USER = (select[a:R_AMOUNT] -> 
+         if (a <= 2) then requestFuel[x:R_AMOUNT].
+         if (x == a) then USER else FAILURE).
+
+WORKER = (person[c:R_CUSTOMERS].select[x:R_AMOUNT] -> assign[p:R_PUMPS][c][x] -> WORKER).
+
+FUEL_DISPENSER = (assign[c:R_CUSTOMERS][x:R_AMOUNT] -> 
+                   deliverFuel[c][x] -> 
+                   reset -> FUEL_DISPENSER).
+
+SUPPLY = (deliverFuel[p:R_PUMPS][c:R_CUSTOMERS][x:R_AMOUNT] -> 
+          person[c].ack[x] -> 
+          SUPPLY).
+
+||SERVICE_CENTER = (WORKER || dispenser[1..TOTAL_PUMPS]:FUEL_DISPENSER || SUPPLY)
+  /{dispenser[i:1..TOTAL_PUMPS].assign/assign[i],
+    dispenser[i:1..TOTAL_PUMPS].deliverFuel/deliverFuel[i]}.
+
+||GAS_SERVICE = (person[1..TOTAL_CUSTOMERS]:USER || SERVICE_CENTER).

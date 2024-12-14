@@ -1,0 +1,50 @@
+S_T = (get_p -> get_m -> roll -> smoke -> S_T).
+S_P = (get_t -> get_m -> roll -> smoke -> S_P).
+S_M = (get_t -> get_p -> roll -> smoke -> S_M).
+
+
+T = (deliv -> pick -> T).
+P = (deliv -> pick -> P).
+M = (deliv -> pick -> M).
+
+A_T = (ready -> deliv_p -> deliv_m -> A_T).
+A_P = (ready -> deliv_m -> deliv_t -> A_P).
+A_M = (ready -> deliv_t -> deliv_p -> A_M).
+
+
+R = (ready -> done -> R).
+
+property CORRECT_PICKUP = (
+    s_t.get_p -> s_t.get_m -> CORRECT_PICKUP
+  | s_p.get_t -> s_p.get_m -> CORRECT_PICKUP
+  | s_m.get_t -> s_m.get_p -> CORRECT_PICKUP
+).
+
+||COMPOSITE_PROCESS = (S_T || S_P || S_M || T || P || M || A_T || A_P || A_M || R || CORRECT_PICKUP) / {
+    s_t.get_p / s_t.pick,
+    s_m.get_p / s_m.pick,
+    s_p.get_p / s_p.pick,
+    
+    s_t.deliv_p / s_t.deliv,
+    s_m.deliv_p / s_m.deliv,
+    s_p.deliv_p / s_p.deliv,
+    
+    s_t.smoking_completed / s_t.smoke,
+    s_m.smoking_completed / s_m.smoke,
+    s_p.smoking_completed / s_p.smoke
+}.
+
+||CIG_SMOKERS = (SMOKERS || RESOURCES || AGENT_RULE) /
+{
+    s_t.get_p / s_t.pick,
+    s_m.get_p / s_m.pick,
+    s_p.get_p / s_p.pick,
+    
+    s_t.deliv_p / s_t.deliv,
+    s_m.deliv_p / s_m.deliv,
+    s_p.deliv_p / s_p.deliv,
+    
+    s_t.smoking_completed / s_t.smoke,
+    s_m.smoking_completed / s_m.smoke,
+    s_p.smoking_completed / s_p.smoke
+}.

@@ -1,0 +1,34 @@
+// Smoker Processes with revised action order and names
+SMOKER_WITH_TOBACCO = (request_paper -> request_match -> prepare_cigar -> enjoy -> SMOKER_WITH_TOBACCO).
+SMOKER_WITH_PAPER = (request_tobacco -> request_match -> prepare_cigar -> enjoy -> SMOKER_WITH_PAPER).
+SMOKER_WITH_MATCH = (request_tobacco -> request_paper -> prepare_cigar -> enjoy -> SMOKER_WITH_MATCH).
+
+// Resource Processes with changed naming for actions
+TOBACCO_SUPPLY = (available -> taken -> TOBACCO_SUPPLY).
+PAPER_SUPPLY = (available -> taken -> PAPER_SUPPLY).
+MATCH_SUPPLY = (available -> taken -> MATCH_SUPPLY).
+
+// Agent Processes with modified delivery steps and signals
+T_SUPPLIER = (ready_to_deliver -> supply_paper -> supply_match -> T_SUPPLIER).
+P_SUPPLIER = (ready_to_deliver -> supply_match -> supply_tobacco -> P_SUPPLIER).
+M_SUPPLIER = (ready_to_deliver -> supply_tobacco -> supply_paper -> M_SUPPLIER).
+
+// Control Process renamed with action variations
+CONTROLLER = (ready_to_deliver -> session_complete -> CONTROLLER).
+||SMOKERS_GROUP = (smk_t:SMOKER_WITH_TOBACCO || smk_p:SMOKER_WITH_PAPER || smk_m:SMOKER_WITH_MATCH).
+||SUPPLIES = ({smk_m, smk_p}::TOBACCO_SUPPLY || {smk_t, smk_m}::PAPER_SUPPLY || {smk_t, smk_p}::MATCH_SUPPLY).
+||SUPPLY_CHAIN = ({smk_m, smk_p, smk_t}::CONTROLLER || {smk_m, smk_p}::T_SUPPLIER || {smk_m, smk_t}::P_SUPPLIER || {smk_t, smk_p}::M_SUPPLIER).
+||CIGAR_SMOKERS_SYSTEM = (SMOKERS_GROUP || SUPPLIES || SUPPLY_CHAIN) /
+{
+    smk_t.request_paper / smk_t.received,
+    smk_m.request_paper / smk_m.received,
+    smk_p.request_paper / smk_p.received,
+    
+    smk_t.supply_paper / smk_t.available,
+    smk_m.supply_paper / smk_m.available,
+    smk_p.supply_paper / smk_p.available,
+    
+    smk_t.session_complete / smk_t.finish,
+    smk_m.session_complete / smk_m.finish,
+    smk_p.session_complete / smk_p.finish
+}.

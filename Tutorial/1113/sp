@@ -1,0 +1,5 @@
+P = (start -> end -> P).
+
+property SP = ({a,b}.start -> {a,b}.end -> SP).
+
+||S = (a:P || b:P || SP).

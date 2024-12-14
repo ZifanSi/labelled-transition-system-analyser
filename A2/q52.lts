@@ -1,0 +1,28 @@
+||COMPOSITE_SYSTEM = (
+    smk_t:SMOKER_WITH_TOBACCO 
+    || smk_p:SMOKER_WITH_PAPER 
+    || smk_m:SMOKER_WITH_MATCH 
+    || tob:TOBACCO_SUPPLY 
+    || pap:PAPER_SUPPLY 
+    || mat:MATCH_SUPPLY 
+    || sup_t:T_SUPPLIER 
+    || sup_p:P_SUPPLIER 
+    || sup_m:M_SUPPLIER 
+    || ctrl:CONTROLLER
+    || (smk_t.request_paper -> smk_t.request_match -> COMPOSITE_SYSTEM
+       | smk_p.request_tobacco -> smk_p.request_match -> COMPOSITE_SYSTEM
+       | smk_m.request_tobacco -> smk_m.request_paper -> COMPOSITE_SYSTEM)
+) /
+{
+    smk_t.request_paper / smk_t.received,
+    smk_m.request_paper / smk_m.received,
+    smk_p.request_paper / smk_p.received,
+    
+    smk_t.supply_paper / smk_t.available,
+    smk_m.supply_paper / smk_m.available,
+    smk_p.supply_paper / smk_p.available,
+    
+    smk_t.session_complete / smk_t.finish,
+    smk_m.session_complete / smk_m.finish,
+    smk_p.session_complete / smk_p.finish
+}.

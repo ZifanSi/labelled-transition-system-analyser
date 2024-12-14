@@ -1,0 +1,8 @@
+P = (start -> write -> end -> P).
+
+property SP = ({a,b}.start -> {a,b}.end -> SP).
+
+// Whats the point
+||S = (a:P || b:P || SP)>>{a.start,b.start}.
+
+progress SP = (a.write,b.write).

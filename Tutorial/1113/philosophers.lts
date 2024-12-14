@@ -1,0 +1,3 @@
+PHIL = (left.get -> right.get -> eat -> left.put -> right.put -> PHIL).
+FORK = (get -> put -> FORK).
+||TABLE = (a:PHIL || b:PHIL || {a.left,b.right}::FORK || {a.right,b.left}::FORK).

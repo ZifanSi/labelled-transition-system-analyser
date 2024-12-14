@@ -1,0 +1,6 @@
+P = (read.start -> read -> read.end -> P
+     | write.start -> write -> write.end -> P).
+
+property SP = (write.start -> write.end -> SP).
+
+||S = (a:P || b:P || {a,b}::SP).

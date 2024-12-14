@@ -1,0 +1,10 @@
+// comma vs semicolon
+//
+
+
+PHIL = (left.get -> right.get -> eat -> left.put -> right.put -> PHIL).
+FORK = (get -> put -> FORK).
+
+// 
+MUTEX = (left.get -> right.put -> MUTEX).
+||TABLE = (a:PHIL || b:PHIL || {a.left,b.right}::FORK || {a.right,b.left}::FORK || {a,b}::MUTEX).
