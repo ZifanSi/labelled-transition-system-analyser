@@ -1,0 +1,2 @@
+Alpha = (a->b->Alpha | b->Beta)+{d}.
+Beta = (c->b->Alpha | b->Beta).

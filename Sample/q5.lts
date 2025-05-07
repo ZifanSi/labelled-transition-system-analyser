@@ -1,0 +1,6 @@
+BSEMA = (up -> down -> BSEMA).
+PROCESS = (console.up -> console.down -> PROCESS).
+// system processes have higher priority than user processes
+||OS = ( user[1]:PROCESS || user[2]:PROCESS || system[1]:PROCESS || system[2]:PROCESS 
+       || {user[1], user[2], system[1], system[2]}::console:BSEMA )
+>> { user[1], user[2] }.

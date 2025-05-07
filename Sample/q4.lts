@@ -1,0 +1,14 @@
+const M = 2    
+SAVAGE = ( get_serving -> SAVAGE ).
+range Savages = 1..3
+||SAVAGES = ( forall[i: Savages] savage[i]:SAVAGE ).
+COOK = ( fill_pot -> COOK ).
+range Portions = 0..M      
+POT = POT[0],  
+POT[p: Portions] = (
+    when ( p > 0 ) take_portion -> POT[p-1]  
+    | fill -> POT[M]                         
+).
+||DINING_SAVAGES = ( SAVAGES || pot:POT || cook:COOK )
+/{ savage[s: Savages].get_serving/pot.take_portion,  
+    cook.fill_pot/pot.fill}.

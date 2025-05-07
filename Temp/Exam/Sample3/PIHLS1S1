@@ -1,0 +1,21 @@
+// Simple-Minded Construction
+FORK = (get -> put -> FORK).
+PHIL = (think -> right.get -> left.get -> eat ->
+         right.put -> left.put -> PHIL).
+||DINERS(N = 5) = forall[i : 1..N] (phil[i] : PHIL
+          || {phil[i].right, phil[(i % 5) + 1].left} :: FORK).
+//Solution 1: Add Asymmetry
+PHIL = (when (i == 1 | i == 3 | i == 5) 
+            think -> left.get -> right.get -> eat ->
+                    left.put -> right.put -> PHIL
+       | when (i == 2 | i == 4) 
+            think -> right.get -> left.get -> eat ->
+                    right.put -> left.put -> PHIL).
+// Solution 2: Use a Butler
+PHIL = (think -> sitdown -> right.get -> left.get ->
+         eat -> right.put -> left.put -> getup -> PHIL).
+BUTLER(K = 4) = COUNT[0],
+COUNT[i : 1..4] = (when (i < K) sitdown -> COUNT[i+1]
+                 | when (i > 0) getup -> COUNT[i-1]).
+
+||DINERS(N = 5) = (forall[i : 1..N] ||{(phil[i:1..N])}::BUTLER(K = 4)).

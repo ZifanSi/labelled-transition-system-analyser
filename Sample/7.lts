@@ -1,0 +1,12 @@
+SEM(N=INITIAL_VALUE) = SEMA[N]
+SEMA[v:Int] = (
+  // Increment if not at max value
+    when (v<=Max) up -> SEMA[v+1]   
+  // Decrement if value is greater than 0    
+  | when (v>0) down -> SEMA[v-1]).
+SEMS1S2(INITIAL1=3, INITIAL2=3) =
+    (S1:SEM(3) || S2:SEM(3))
+    /{S1.S2.up/S1.up,        
+      S1.S2.up/S2.up,        
+      S1.S2.down/S1.down,   
+      S1.S2.down/S2.down}.

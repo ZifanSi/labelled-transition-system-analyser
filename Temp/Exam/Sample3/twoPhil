@@ -1,0 +1,12 @@
+PHILOSOPHER = ( 
+    think -> 
+    check_cookie_available -> get_cookie -> eat_cookie -> put_cookie -> PHILOSOPHER
+    | check_cola_available -> get_cola -> drink_cola -> put_cola -> PHILOSOPHER
+).
+COOKIE_DISPENSER = ( 
+    cookie_available -> get_cookie -> cookieEaten -> put_cookie -> COOKIE_DISPENSER 
+).
+COLA_DISPENSER = ( 
+    cola_available -> get_cola -> colaDrank -> put_cola -> COLA_DISPENSER 
+).
+||SYSTEM = ( P1:PHILOSOPHER || P2:PHILOSOPHER || COOKIE_DISPENSER || COLA_DISPENSER ).

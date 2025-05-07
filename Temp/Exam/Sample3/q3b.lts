@@ -1,0 +1,33 @@
+PRODUCER = (produce[msg: Msgs] -> send[msg] -> PRODUCER).
+||PRODUCERS = ( forall[i: Prods] p[i]: PRODUCER ).
+CONSUMER(Id=0) = (receive[Id] -> consume[Id] -> CONSUMER).
+||CONSUMERS = ( forall[i: Cons] c[i]: CONSUMER(i) )./
+MIX(Id=0) = (
+    switch -> produce[msg: Msgs] -> STUTTER[msg]
+    | switch -> receive[Id] -> consume[Id] -> MIX),
+STUTTER[msg: Msgs] = (
+    send[msg] -> MIX
+    | receive[Id] -> consume[Id] -> STUTTER[msg]).
+/* System properties */
+progress MSGS00 = { p[0].produce[0] }
+progress MSGS01 = { p[0].produce[1] }
+progress MSGS02 = { p[0].produce[2] }
+progress MSGS10 = { p[1].produce[0] }
+progress MSGS11 = { p[1].produce[1] }
+progress MSGS12 = { p[1].produce[2] }
+/* No producer is blocked indefinitely. */
+progress SENDS0 = { p[0].send[Msgs] }
+progress SENDS1 = { p[1].send[Msgs] }
+/* No consumer is blocked indefinitely. */
+progress C0 = { c[0].consume[0] }
+progress C1 = { c[1].consume[1] }
+progress C2 = { mix.consume[2] }
+/* Each consumer only consumes messages addressed to it */
+property ADDRESSED = (
+    c[i: Cons].consume[i] -> ADDRESSED
+    | mix.consume[M] -> ADDRESSED).
+||AMP = ( PRODUCERS || BOUNDED_BUFFER || mix: MIX(M) || CONSUMERS || ADDRESSED )
+        / { p[Prods].send/enqueue,
+            mix.send/enqueue,
+            mix.receive[M]/dequeue[M],
+            c[i: Cons].receive[i]/dequeue[i] }.

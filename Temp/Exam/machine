@@ -1,0 +1,22 @@
+MACHINE = (work -> MACHINE | replace_p1 -> MACHINE | replace_p2 -> MACHINE)
+const K = 4
+range mach = 1..K
+|| MACHINES = (forall[i:mach]machine[i]:MACHINE)
+TECHNICIAN = ( replace_p1 -> TECHNICIAN | replace_p2 -> TECHNICIAN ) |
+    refill_storage_1 -> TECHNICIAN | refill_storage_2 -> TECHNICIAN )
+const M = 3
+range part1 = 0..M
+STORAGE_1 = STORAGE_1[M]
+STORAGE_1[s:part1] = (when (s>0) replace_p1 -> STORAGE_1[s-1]
+        | when (s==0) refill_storage_1 -> STORAGE_1[M] )
+const N = 3
+range part2 = 0..N
+STORAGE_2 = STORAGE_2[N]
+STORAGE_2[s:part1] = (when (s>0) replace_p2 -> STORAGE_1[s-1]
+                | when (s==0) refill_storage_2 -> STORAGE_1[N]
+property P_part1 = P_part1[M]
+P_part1[s:part1] = (when (s==0) refill_storage_1 -> P_part1[M])
+property P_part2 = P_part2[N]
+P_part2[s:part2] = (when (s==0) refill_storage_2 -> P_part2[N])
+||MACHINE_SHOP = ( MACHINES || STORAGE_1 || STORAGE_2 || TECHNICIAN ||
+ P_part1 || P_part2 ) << {refill_storage_1,refill_storage_2}

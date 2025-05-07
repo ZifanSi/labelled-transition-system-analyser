@@ -1,0 +1,24 @@
+// buffer of messages
+const P = 1       
+const C = 1        
+const M = C+1      
+range Msgs = 0..M  
+range Prods = 0..P 
+range Cons = 0..C  
+const B = 4       
+set Queue = {[Msgs], [Msgs|Msgs], [Msgs|Msgs|Msgs]}
+BUFFER = (
+    enqueue[m: Msgs] -> BUFFER[m]),
+BUFFER[m: Msgs] = (
+    enqueue[n: Msgs] -> BUFFER[m][n]
+    | dequeue[m] -> BUFFER),
+BUFFER[m: Msgs][ms: Queue] = (
+    enqueue[n: Msgs] -> BUFFER[m][ms][n]
+    | dequeue[m] -> BUFFER[ms]).
+BOUND = BOUND[0],
+BOUND[n: 0..3] = (
+    when n < 3 increment -> BOUND[n+1]
+    | when 0 < n decrement -> BOUND[n-1]
+).
+||BOUNDED_BUFFER = ( BOUND || BUFFER )
+    /{ enqueue[Msgs]/increment, dequeue[Msgs]/decrement }.

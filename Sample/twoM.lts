@@ -1,0 +1,3 @@
+MACHINE = ( start -> run -> stop -> MACHINE ).
+||TWO_MACHINES = ( m1:MACHINE || m2:MACHINE )
+/{ start/m1.start, start/m2.start  }.

@@ -1,0 +1,13 @@
+const J = 3
+range Jobs = 0..J
+PRINTER = PRINTER[3],
+PRINTER[j:Jobs] = 
+    (when (j == 0) replace_toner -> PRINTER[J]
+    |when (j > 0) print_job -> PRINTER[j-1]).
+USER = (print_job -> USER).
+const M = 2
+range Users = 0..M
+||USERS = (forall [i:Users] user[i]:USER).
+TECHNICIAN = (replace_toner -> TECHNICIAN).
+||OFFICE = (USERS || PRINTER || TECHNICIAN) 
+           /{user[Users].print_job/print_job}.
